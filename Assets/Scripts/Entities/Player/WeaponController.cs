@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entities.Player {
+namespace Entity.Player {
     public class WeaponController : MonoBehaviour {
 
     }

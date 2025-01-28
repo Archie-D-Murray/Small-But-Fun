@@ -95,4 +95,12 @@ public static class Extensions {
     public static T GetRandomValue<T>(this T[] array) {
         return array[Random.Range(0, array.Length)];
     }
+
+    public static float AngleTo(this Vector2 origin, Vector2 point) {
+        return Vector2.SignedAngle(Vector2.up, (point - origin).normalized);
+    }
+
+    public static Quaternion RotationTo(this Vector2 origin, Vector2 point) {
+        return Quaternion.AngleAxis(origin.AngleTo(point), Vector3.forward);
+    }
 }
