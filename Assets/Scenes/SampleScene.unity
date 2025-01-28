@@ -487,7 +487,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -945,12 +945,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2105388962}
-  - component: {fileID: 2105388960}
   - component: {fileID: 2105388958}
-  - component: {fileID: 2105388963}
+  - component: {fileID: 2105388965}
   - component: {fileID: 2105388964}
+  - component: {fileID: 2105388960}
+  - component: {fileID: 2105388963}
   m_Layer: 7
-  m_Name: Circle
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -968,10 +969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3818b03ffd39fedab12efce3414038c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rb2D: {fileID: 0}
-  _spriteRenderer: {fileID: 0}
-  _animator: {fileID: 0}
-  _collider: {fileID: 0}
   _speed: 0
   _maxSpeed: 5
   _teleportCooldown: 0.75
@@ -1081,3 +1078,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealth: 0
   _maxHealth: 100
+--- !u!114 &2105388965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105388957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d9827b0a8e6f113b8b8ff90f0029e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackRange: 2
+  _mask:
+    serializedVersion: 2
+    m_Bits: 64
+  _damage: 10
+  _attackTime: 1
+  _attackTimer:
+    _initialTime: 0
+    _time: 0
+  _modifier: 1
+  angle: 0

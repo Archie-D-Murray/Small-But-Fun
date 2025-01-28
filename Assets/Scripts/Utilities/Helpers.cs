@@ -18,6 +18,13 @@ namespace Utilities {
             );
         }
 
+        public float AngleToMouseOpposite(Transform obj) {
+            return Vector2.SignedAngle(
+                ((Vector2)MainCamera.ScreenToWorldPoint(Input.mousePosition) - (Vector2)obj.position).normalized,
+                Vector2.up
+            );
+        }
+
         public Vector2 WorldMousePosition() {
             return MainCamera.ScreenToWorldPoint(Input.mousePosition);
         }

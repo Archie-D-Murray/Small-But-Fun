@@ -6,11 +6,11 @@ namespace Entity.Player {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour {
 
-        [Header("References")]
-        [SerializeField] private Rigidbody2D _rb2D;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] private Animator _animator;
-        [SerializeField] private CircleCollider2D _collider;
+        private Rigidbody2D _rb2D;
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
+        private CircleCollider2D _collider;
+        private WeaponController _weaponController;
 
         [Header("Movement")]
         [SerializeField] private float _speed = 0f;
@@ -31,6 +31,7 @@ namespace Entity.Player {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _animator = GetComponentInChildren<Animator>();
             _collider = GetComponent<CircleCollider2D>();
+            _weaponController = GetComponent<WeaponController>();
             _colliderDefaultSize = _collider.radius;
             _rendererDefaultScale = _spriteRenderer.transform.localScale;
         }
@@ -66,6 +67,7 @@ namespace Entity.Player {
             _sizeIndex = Mathf.Clamp(size, 0, _sizes.Length - 1);
             _spriteRenderer.transform.localScale = _rendererDefaultScale * _sizes[_sizeIndex];
             _collider.radius = _colliderDefaultSize * _sizes[_sizeIndex];
+            _weaponController.UpdateSize(_sizes[_sizeIndex]);
         }
     }
 }
