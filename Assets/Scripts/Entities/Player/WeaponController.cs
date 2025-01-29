@@ -10,10 +10,17 @@ namespace Entity.Player {
         [SerializeField] private float _attackTime = 1f;
         [SerializeField] private CountDownTimer _attackTimer = new CountDownTimer(0f);
         [SerializeField] private float _modifier = 1f;
+        private Animator _animator;
 
         private float damage => _damage * _modifier;
         private float attackRange => _attackRange * _modifier;
         private float attackTime => _attackTime / _modifier;
+
+        private readonly int _attack = Animator.StringToHash("Attack");
+
+        private void Start() {
+            _animator = GetComponentInChildren<Animator>();
+        }
 
         public void UpdateSize(float size) {
             _modifier = size;
@@ -32,7 +39,7 @@ namespace Entity.Player {
         }
 
         private void Attack() {
-            Debug.Log("Attacking");
+            _animator.Play(_attack);
             foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, attackRange, _mask)) {
                 if (!collider.TryGetComponent(out Health health) || Vector2.Dot((collider.transform.position - transform.position).normalized, transform.up) >= 0.5f) {
                     continue;
