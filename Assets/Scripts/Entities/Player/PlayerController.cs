@@ -6,6 +6,8 @@ namespace Entity.Player {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour {
 
+        private readonly int _speedID = Animator.StringToHash("speed");
+
         private Rigidbody2D _rb2D;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
@@ -47,6 +49,7 @@ namespace Entity.Player {
             }
             _rb2D.velocity = Vector2.ClampMagnitude(_rb2D.velocity, _maxSpeed);
             _teleportTimer.Update(Time.fixedDeltaTime);
+            _animator.SetFloat(_speedID, _rb2D.velocity.sqrMagnitude);
         }
 
         private void Update() {

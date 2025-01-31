@@ -32,7 +32,7 @@ namespace Entity.Player {
                 _attackTimer.Reset(attackTime);
                 Attack();
             }
-            float fAngle = Mathf.RoundToInt(Helpers.Instance.AngleToMouseOpposite(transform));
+            float fAngle = Mathf.RoundToInt(Helpers.Instance.AngleToMouse(transform));
             if (fAngle < 0) { fAngle = 360 + fAngle; }
             int angle = (int)((fAngle + 45.0f) / 90.0f) * 90;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

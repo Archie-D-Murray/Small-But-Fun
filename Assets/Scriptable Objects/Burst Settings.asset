@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnDelay: 3
   SpawnAmount: 3
-  InitialDelay: 0
-  BurstCount: 6
+  InitialDelay: 2
+  BurstCount: 3
