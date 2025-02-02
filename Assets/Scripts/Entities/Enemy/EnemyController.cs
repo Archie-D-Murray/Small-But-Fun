@@ -6,21 +6,18 @@ namespace Entity.Enemy {
     abstract public class EnemyController : MonoBehaviour {
 
         protected class EnemyAnimations {
-            public int Idle;
-            public int Attack;
-
-            public EnemyAnimations(string name) {
-                Idle = Animator.StringToHash($"{name}_Idle");
-                Attack = Animator.StringToHash($"{name}_Attack");
-            }
+            public static int Idle = Animator.StringToHash("Idle");
+            public static int Attack = Animator.StringToHash("Attack");
+            public static int Speed = Animator.StringToHash("Speed");
         }
 
         public enum EnemyState { Idle, Attack, Death }
-        public enum EnemyType { Melee, Ranged }
+        public enum EnemyType { Melee, Ranged, Turret }
 
         protected EnemyManager _manager;
         protected Animator _animator;
         protected Rigidbody2D _rb2D;
+        protected Health _health;
 
         [SerializeField] protected EnemyState _state;
         [SerializeField] protected float _speed = 4f;
@@ -30,14 +27,24 @@ namespace Entity.Enemy {
         [SerializeField] protected float _damage = 5f;
         [SerializeField] protected CountDownTimer _attackTimer = new CountDownTimer(0f);
 
-        protected EnemyAnimations _animations;
+        private void Awake() {
+            _health = GetComponent<Health>();
+            _health.OnDeath += () => SwitchState(EnemyState.Death);
+            _animator = GetComponentInChildren<Animator>();
+            _rb2D = GetComponent<Rigidbody2D>();
+        }
 
         private void Start() {
             _manager = transform.parent.GetComponent<EnemyManager>();
-            _animations = new EnemyAnimations(GetEnemyType().ToString());
-            _animator = GetComponentInChildren<Animator>();
-            _rb2D = GetComponent<Rigidbody2D>();
-            _animator.Play(_animations.Idle);
+            _animator.Play(EnemyAnimations.Idle);
+        }
+
+        public void RoomSpawn(Room room) {
+            room.OnEnemySpawn(this);
+            if (!_health) {
+                _health = GetComponent<Health>();
+            }
+            _health.OnDeath += () => room.OnEnemyDeath(this);
         }
 
         public abstract EnemyType GetEnemyType();
@@ -83,6 +90,7 @@ namespace Entity.Enemy {
                     break;
                 case EnemyState.Death:
                     _state = newState;
+                    EnterDeath();
                     break;
                 default:
                     Debug.Log($"AHHHHHHHH, What is state: {_state}");
@@ -97,10 +105,9 @@ namespace Entity.Enemy {
         protected virtual void Idle() { }
         protected virtual void EnterIdle() { }
 
-        protected virtual void Chase() { }
-        protected virtual void EnterChase() { }
-
         protected virtual void Attack() { }
         protected virtual void EnterAttack() { }
+
+        protected virtual void EnterDeath() { }
     }
 }

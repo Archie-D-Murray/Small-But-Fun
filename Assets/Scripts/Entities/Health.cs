@@ -8,10 +8,13 @@ using System.Collections;
 using Utilities;
 
 namespace Entity {
+
     public class Health : MonoBehaviour {
         public float PercentHealth => Mathf.Clamp01(_currentHealth / _maxHealth);
         public float CurrentHealth => _currentHealth;
         public float MaxHealth => _maxHealth;
+        public float MissingHealth => Mathf.Max(0, _maxHealth - _currentHealth);
+        public float DamageModifier { get => _damageModifier; set => _damageModifier = value; }
         public bool Invulnerable => _invulnerable;
         public Action<float> OnDamage;
         public Action<float> OnHeal;
@@ -24,12 +27,13 @@ namespace Entity {
 
         [SerializeField] private float _currentHealth;
         [SerializeField] private float _maxHealth;
+        [SerializeField] private float _damageModifier = 1f;
 
         private void Awake() {
             _currentHealth = _maxHealth;
         }
 
-        private void UpdateMaxHealth(float health) {
+        public void UpdateMaxHealth(float health) {
             Debug.Log($"Updated max health for {name} to {health}");
             float diff = health - _currentHealth;
             _maxHealth = health;
@@ -46,7 +50,7 @@ namespace Entity {
                 OnInvulnerableDamage?.Invoke();
                 return;
             }
-            damage = Mathf.Max(damage, 0.0f);
+            damage = Mathf.Max(damage * _damageModifier, 0.0f);
             if (damage != 0.0f) {
                 _currentHealth = Mathf.Max(0.0f, _currentHealth - damage);
                 OnDamage?.Invoke(damage);

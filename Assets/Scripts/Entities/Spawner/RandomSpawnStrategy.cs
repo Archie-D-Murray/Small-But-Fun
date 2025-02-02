@@ -14,9 +14,10 @@ namespace Entity.Spawner {
             return spawnPoints[UnityEngine.Random.Range(spawnIndex, spawnPoints.Length)].position;
         }
 
-        public override int Spawn(Vector3 position, GameObject prefab, EnemyManager manager) {
+        public override int Spawn(Vector3 position, GameObject prefab, EnemyManager manager, Room room = null) {
             GameObject spawned = Instantiate(prefab, manager.transform);
             spawned.transform.SetPositionAndRotation(position, Quaternion.identity);
+            RoomSpawnCallback(room, spawned);
             return 1;
         }
     }

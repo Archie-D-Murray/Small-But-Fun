@@ -8,7 +8,7 @@ namespace Entity.Enemy {
         }
 
         protected override void EnterIdle() {
-            _animator.Play(_animations.Idle);
+            _animator.Play(EnemyAnimations.Idle);
         }
 
         protected override void Idle() {
@@ -28,7 +28,7 @@ namespace Entity.Enemy {
 
             if (_manager.InRange(_attackRange, transform.position) && _attackTimer.IsFinished) {
                 _attackTimer.Reset(_attackTime);
-                _animator.Play(_animations.Attack);
+                _animator.Play(EnemyAnimations.Attack);
                 foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, _attackRange, _manager.PlayerLayer)) {
                     if (!collider.TryGetComponent(out Health health)) { continue; }
                     health.Damage(_damage);

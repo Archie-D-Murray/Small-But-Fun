@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 using Utilities;
@@ -9,21 +11,19 @@ namespace Entity.Player {
         [SerializeField] private float _damage = 10;
         [SerializeField] private float _attackTime = 1f;
         [SerializeField] private CountDownTimer _attackTimer = new CountDownTimer(0f);
-        [SerializeField] private float _modifier = 1f;
+        [SerializeField] private float _damageModifier = 1f;
         private Animator _animator;
+        private SizeController _sizeController;
 
-        private float damage => _damage * _modifier;
-        private float attackRange => _attackRange * _modifier;
-        private float attackTime => _attackTime / _modifier;
+        private float damage => _damage * _sizeController.DamageModifier * _damageModifier;
+        private float attackRange => _attackRange * _sizeController.DamageModifier;
+        private float attackTime => _attackTime / _sizeController.DamageModifier;
 
         private readonly int _attack = Animator.StringToHash("Attack");
 
         private void Start() {
             _animator = GetComponentInChildren<Animator>();
-        }
-
-        public void UpdateSize(float size) {
-            _modifier = size;
+            _sizeController = GetComponent<SizeController>();
         }
 
         private void Update() {
@@ -46,6 +46,10 @@ namespace Entity.Player {
                 }
                 health.Damage(damage);
             }
+        }
+
+        public void DamageModifier(float magnitude) {
+            _damageModifier *= magnitude;
         }
     }
 }

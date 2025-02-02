@@ -15,7 +15,7 @@ namespace Entity.Enemy {
         }
 
         protected override void EnterIdle() {
-            _animator.Play(_animations.Idle);
+            _rb2D.velocity = Vector2.zero;
         }
 
         protected override void Idle() {
@@ -31,7 +31,9 @@ namespace Entity.Enemy {
                 return;
             }
 
+            _animator.SetFloat(EnemyAnimations.Speed, _rb2D.velocity.sqrMagnitude / _speed * _speed);
 
+            transform.rotation = _rb2D.position.RotationCardinalTo(_manager.PlayerPosition());
             if (_manager.InRange(_runRange, _rb2D.position)) { // Run towards
                 _rb2D.velocity = _speed * Vector2.ClampMagnitude(_rb2D.position - _manager.PlayerPosition(), 1f);
             } else if (_manager.InRange(_attackRange, _rb2D.position) && _attackTimer.IsFinished) { // Shoot
@@ -40,9 +42,15 @@ namespace Entity.Enemy {
                 projectile.GetOrAddComponent<LinearProjectileMover>().Init(_projectileSpeed);
                 projectile.GetOrAddComponent<AutoDestroy>().Init(_projectileDuration);
                 projectile.GetOrAddComponent<EntityDamager>().Init(_damage);
+                _animator.Play(EnemyAnimations.Attack);
             } else { // Run away
                 _rb2D.velocity = _speed * Vector2.ClampMagnitude(_manager.PlayerPosition() - _rb2D.position, 1f);
             }
+        }
+
+        protected override void EnterDeath() {
+            _rb2D.velocity = Vector2.zero;
+            Destroy(gameObject, 0.1f);
         }
     }
 }
