@@ -4,6 +4,8 @@ using Entity.Enemy;
 
 using UnityEngine;
 
+using Rooms;
+
 namespace Entity.Spawner {
     public abstract class SpawnStrategy : ScriptableObject {
         public float SpawnDelay = 3f;

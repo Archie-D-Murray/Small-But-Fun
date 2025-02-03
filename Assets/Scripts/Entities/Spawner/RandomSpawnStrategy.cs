@@ -1,12 +1,15 @@
 using Entity.Enemy;
 
+using Rooms;
+
 using UnityEngine;
 
 namespace Entity.Spawner {
     [CreateAssetMenu(menuName = "Spawner/Random", fileName = "Random Settings")]
     public sealed class RandomSpawnStrategy : SpawnStrategy {
+
         public override bool CanSpawn(int spawnCount) {
-            return true;
+            return spawnCount <= SpawnAmount;
         }
 
         public override Vector3 GetSpawnPoint(Transform[] spawnPoints, ref int spawnIndex) {
@@ -16,6 +19,7 @@ namespace Entity.Spawner {
 
         public override int Spawn(Vector3 position, GameObject prefab, EnemyManager manager, Room room = null) {
             GameObject spawned = Instantiate(prefab, manager.transform);
+            spawned.name = prefab.name + Time.time;
             spawned.transform.SetPositionAndRotation(position, Quaternion.identity);
             RoomSpawnCallback(room, spawned);
             return 1;

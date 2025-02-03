@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5175101754499196520}
   - component: {fileID: 701344699394240663}
   - component: {fileID: -1363000295140220827}
+  - component: {fileID: 2771139136323720190}
   m_Layer: 6
   m_Name: Ranged
   m_TagString: Untagged
@@ -140,8 +141,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: -0.5882353}
-    oldSize: {x: 0.23, y: 0.17}
+    pivot: {x: 0.5, y: 0.3529412}
+    oldSize: {x: 1.4375, y: 1.0625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,7 +177,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &5175101754499196520
 Animator:
   serializedVersion: 5
@@ -187,7 +188,7 @@ Animator:
   m_GameObject: {fileID: 8168216875010562382}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: -6202639055050209246, guid: 892edfc8a5e6f024a8276a3c14babc3e, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2cd9323700a6afc439ea87811c0d3783, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -258,3 +259,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.41
+--- !u!114 &2771139136323720190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8168216875010562382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41566507818397468b8f2c5fd57d99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effects:
+  - Clip: {fileID: 0}
+    Type: 1
+  - Clip: {fileID: 0}
+    Type: 2
+  - Clip: {fileID: 0}
+    Type: 3

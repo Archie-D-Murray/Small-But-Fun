@@ -8,6 +8,7 @@ using UnityEngine;
 using Utilities;
 
 using Tags;
+using Rooms;
 
 namespace Entity.Spawner {
     public class EnemySpawner : MonoBehaviour {
@@ -24,6 +25,7 @@ namespace Entity.Spawner {
         public Action<EnemySpawner> OnFinish;
 
         public bool IsDone => !_strategy.CanSpawn(_spawnCount);
+        public int MaxSpawns => _strategy.SpawnAmount;
 
         private void Start() {
             if (transform.parent.OrNull()?.TryGetComponent(out Room room) ?? false) {
@@ -48,10 +50,13 @@ namespace Entity.Spawner {
             _spawnTimer.Update(Time.fixedDeltaTime);
             if (_spawnTimer.IsFinished && _allowSpawning) {
                 _spawnCount += _strategy.Spawn(_strategy.GetSpawnPoint(_spawnPoints, ref _spawnIndex), _prefab, _manager, _room);
+                Debug.Log($"Spawner {name} spawned");
                 _spawnTimer.Reset(_strategy.SpawnDelay);
                 if (!_strategy.CanSpawn(_spawnCount)) {
                     enabled = false; // Done spawning
                     _allowSpawning = false;
+                    OnFinish?.Invoke(this);
+                    Debug.Log($"Spawner {name} finished");
                 }
             }
         }

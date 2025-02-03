@@ -16,13 +16,14 @@ GameObject:
   - component: {fileID: 3482574093729639749}
   - component: {fileID: 5546693890781340636}
   - component: {fileID: 7525012916962928007}
+  - component: {fileID: 5287378560336996005}
   m_Layer: 6
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5435811520349736844
 Transform:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 2351243691735855521, guid: f8a06f5bb5edd4e44a777c182f482927, type: 3}
-  m_Color: {r: 1, g: 0.8772963, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -197,7 +198,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &5546693890781340636
 Animator:
   serializedVersion: 5
@@ -254,3 +255,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.59375}
   serializedVersion: 2
   m_Radius: 0.41
+--- !u!114 &5287378560336996005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433468315230613265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41566507818397468b8f2c5fd57d99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effects:
+  - Clip: {fileID: 0}
+    Type: 1
+  - Clip: {fileID: 0}
+    Type: 2
+  - Clip: {fileID: 0}
+    Type: 3

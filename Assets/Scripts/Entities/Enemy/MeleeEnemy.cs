@@ -1,8 +1,16 @@
+using Audio;
+
 using UnityEngine;
 
 
 namespace Entity.Enemy {
     public class MeleeEnemy : EnemyController {
+
+        protected override void Start() {
+            base.Start();
+            _health.OnDamage += (float _) => Debug.Log($"{name} got hit");
+        }
+
         public override EnemyType GetEnemyType() {
             return EnemyType.Melee;
         }
@@ -18,7 +26,6 @@ namespace Entity.Enemy {
         }
 
         protected override void Attack() {
-
             if (!_manager.InRange(_aggroRange, transform.position)) {
                 SwitchState(EnemyState.Idle);
                 return;
@@ -27,6 +34,7 @@ namespace Entity.Enemy {
             _rb2D.velocity = _speed * Vector2.ClampMagnitude(_manager.PlayerPosition() - _rb2D.position, 1f);
 
             if (_manager.InRange(_attackRange, transform.position) && _attackTimer.IsFinished) {
+                _emitter.Play(SoundEffectType.Attack);
                 _attackTimer.Reset(_attackTime);
                 _animator.Play(EnemyAnimations.Attack);
                 foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, _attackRange, _manager.PlayerLayer)) {
@@ -34,6 +42,11 @@ namespace Entity.Enemy {
                     health.Damage(_damage);
                 }
             }
+        }
+
+        protected override void EnterDeath() {
+            _rb2D.velocity = Vector2.zero;
+            Destroy(gameObject, 0.1f);
         }
     }
 }

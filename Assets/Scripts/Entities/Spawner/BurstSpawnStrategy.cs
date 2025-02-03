@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using Entity.Enemy;
 
+using Rooms;
+
 using UnityEngine;
 
 namespace Entity.Spawner {

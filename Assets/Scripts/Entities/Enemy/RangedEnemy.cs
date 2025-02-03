@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Projectiles;
+using Audio;
 
 namespace Entity.Enemy {
     public class RangedEnemy : EnemyController {
@@ -37,6 +38,7 @@ namespace Entity.Enemy {
             if (_manager.InRange(_runRange, _rb2D.position)) { // Run towards
                 _rb2D.velocity = _speed * Vector2.ClampMagnitude(_rb2D.position - _manager.PlayerPosition(), 1f);
             } else if (_manager.InRange(_attackRange, _rb2D.position) && _attackTimer.IsFinished) { // Shoot
+                _emitter.Play(SoundEffectType.Attack);
                 _attackTimer.Reset(_attackTime);
                 GameObject projectile = Instantiate(_projectile, _rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
                 projectile.GetOrAddComponent<LinearProjectileMover>().Init(_projectileSpeed);

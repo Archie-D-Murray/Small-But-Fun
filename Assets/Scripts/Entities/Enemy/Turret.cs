@@ -1,3 +1,5 @@
+using Audio;
+
 using UnityEngine;
 
 using Utilities;
@@ -45,6 +47,7 @@ namespace Entity.Enemy {
             }
 
             if (_attackTimer.IsFinished) {
+                _emitter.Play(SoundEffectType.Attack);
                 GameObject projectile = Instantiate(_projectile, _manager.transform);
                 projectile.transform.SetPositionAndRotation(_rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
                 _animator.Play(EnemyAnimations.Attack);

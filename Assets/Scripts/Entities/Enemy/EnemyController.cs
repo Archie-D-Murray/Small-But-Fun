@@ -1,8 +1,12 @@
 using UnityEngine;
 using System;
 using Utilities;
+using Projectiles;
+using Rooms;
+using Audio;
 
 namespace Entity.Enemy {
+    [RequireComponent(typeof(SFXEmitter))]
     abstract public class EnemyController : MonoBehaviour {
 
         protected class EnemyAnimations {
@@ -18,6 +22,9 @@ namespace Entity.Enemy {
         protected Animator _animator;
         protected Rigidbody2D _rb2D;
         protected Health _health;
+        protected SpriteRenderer _spriteRenderer;
+        protected Material _normalMaterial;
+        protected SFXEmitter _emitter;
 
         [SerializeField] protected EnemyState _state;
         [SerializeField] protected float _speed = 4f;
@@ -29,12 +36,19 @@ namespace Entity.Enemy {
 
         private void Awake() {
             _health = GetComponent<Health>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _normalMaterial = _spriteRenderer.material;
             _health.OnDeath += () => SwitchState(EnemyState.Death);
+            _health.OnDamage += (float _) => {
+                _spriteRenderer.FlashDamage(AssetServer.Instance.FlashMaterial, _normalMaterial, 0.25f, this);
+                _emitter.Play(SoundEffectType.Hit);
+            };
             _animator = GetComponentInChildren<Animator>();
+            _emitter = GetComponent<SFXEmitter>();
             _rb2D = GetComponent<Rigidbody2D>();
         }
 
-        private void Start() {
+        protected virtual void Start() {
             _manager = transform.parent.GetComponent<EnemyManager>();
             _animator.Play(EnemyAnimations.Idle);
         }
@@ -44,7 +58,11 @@ namespace Entity.Enemy {
             if (!_health) {
                 _health = GetComponent<Health>();
             }
-            _health.OnDeath += () => room.OnEnemyDeath(this);
+            _health.OnDeath += () => {
+                room.OnEnemyDeath(this);
+                Instantiate(AssetServer.Instance.EnemyDeath, transform.position, Quaternion.identity).AddComponent<AutoDestroy>().Init(1f);
+                _emitter.Play(SoundEffectType.Death);
+            };
         }
 
         public abstract EnemyType GetEnemyType();

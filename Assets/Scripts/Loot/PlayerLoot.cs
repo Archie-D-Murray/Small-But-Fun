@@ -29,10 +29,9 @@ namespace Loot {
                     break;
 
                 case LootType.Regen:
-                    if (player.gameObject.Has<RegenerationController>()) {
-                        return;
+                    if (player.TryGetComponent(out RegenerationController regenerationController)) {
+                        regenerationController.Increase();
                     }
-                    player.gameObject.AddComponent<RegenerationController>();
                     break;
             }
             Destroy(gameObject);
