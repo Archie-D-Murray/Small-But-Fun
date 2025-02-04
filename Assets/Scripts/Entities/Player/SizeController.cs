@@ -2,6 +2,7 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
+using Utilities;
 
 namespace Entity.Player {
     public class SizeController : MonoBehaviour {
@@ -16,9 +17,9 @@ namespace Entity.Player {
         [SerializeField] private int _sizeIndex = 2;
         [SerializeField] private float _colliderDefaultSize;
         [SerializeField] private Vector3 _rendererDefaultScale;
-        [SerializeField] private bool _sizeLocked = false;
+        [SerializeField] private CountDownTimer _sizeTimer = new CountDownTimer(0f);
+        [SerializeField] private float _sizeTime = 3f;
 
-        private List<GameObject> _sizeLocks = new List<GameObject>();
         private CircleCollider2D _collider;
         private SpriteRenderer _spriteRenderer;
         private Health _health;
@@ -37,12 +38,16 @@ namespace Entity.Player {
         }
 
         private void Update() {
-            if (_sizeLocked) { return; }
-            if (Input.GetKeyDown(KeyCode.Q)) {
-                SetSize(_sizeIndex - 1);
-            }
-            if (Input.GetKeyDown(KeyCode.E)) {
-                SetSize(_sizeIndex + 1);
+            _sizeTimer.Update(Time.deltaTime);
+            if (_sizeTimer.IsFinished) {
+                if (Input.GetKeyDown(KeyCode.Q)) {
+                    SetSize(_sizeIndex - 1);
+                    _sizeTimer.Reset(_sizeTime);
+                }
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    SetSize(_sizeIndex + 1);
+                    _sizeTimer.Reset(_sizeTime);
+                }
             }
         }
 
@@ -51,17 +56,6 @@ namespace Entity.Player {
             _spriteRenderer.transform.localScale = _rendererDefaultScale * _sizeData[_sizeIndex].SizeModifier;
             _collider.radius = _colliderDefaultSize * _sizeData[_sizeIndex].SizeModifier;
             _health.DamageModifier = _sizeData[_sizeIndex].DamageTakenModifier;
-        }
-
-        public void ToggleSizeLock(GameObject lockSource, bool sizeLocked) {
-            if (sizeLocked) {
-                if (!_sizeLocks.Contains(lockSource)) {
-                    _sizeLocks.Add(lockSource);
-                }
-            } else {
-                _sizeLocks.Remove(lockSource);
-            }
-            _sizeLocked = _sizeLocks.Count > 0;
         }
     }
 }

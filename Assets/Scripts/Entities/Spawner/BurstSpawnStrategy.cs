@@ -11,7 +11,7 @@ namespace Entity.Spawner {
     public sealed class BurstSpawnStrategy : SpawnStrategy {
         public int BurstCount = 6;
         public override bool CanSpawn(int spawnCount) {
-            return spawnCount < BurstCount;
+            return spawnCount < SpawnAmount;
         }
 
         public override Vector3 GetSpawnPoint(Transform[] spawnPoints, ref int spawnIndex) {

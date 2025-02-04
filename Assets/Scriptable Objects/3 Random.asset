@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02bfd7ec8d7e0564193e8605f8d81b6f, type: 3}
-  m_Name: Burst Settings
+  m_Script: {fileID: 11500000, guid: 02f7cae8d5b2e1743a6b9f32231b7339, type: 3}
+  m_Name: 3 Random
   m_EditorClassIdentifier: 
-  SpawnDelay: 3
+  SpawnDelay: 2
   SpawnAmount: 3
-  InitialDelay: 2
-  BurstCount: 3
+  InitialDelay: 0

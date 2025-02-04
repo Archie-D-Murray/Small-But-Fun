@@ -40,19 +40,23 @@ namespace Entity.Enemy {
             } else if (_manager.InRange(_attackRange, _rb2D.position) && _attackTimer.IsFinished) { // Shoot
                 _emitter.Play(SoundEffectType.Attack);
                 _attackTimer.Reset(_attackTime);
-                GameObject projectile = Instantiate(_projectile, _rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
-                projectile.GetOrAddComponent<LinearProjectileMover>().Init(_projectileSpeed);
-                projectile.GetOrAddComponent<AutoDestroy>().Init(_projectileDuration);
-                projectile.GetOrAddComponent<EntityDamager>().Init(_damage);
                 _animator.Play(EnemyAnimations.Attack);
             } else { // Run away
-                _rb2D.velocity = _speed * Vector2.ClampMagnitude(_manager.PlayerPosition() - _rb2D.position, 1f);
+                _rb2D.velocity = _speed * Vector2.ClampMagnitude(_manager.PlayerPosition() + (_manager.PlayerPosition() - _rb2D.position).normalized * _attackRange, 1f);
             }
         }
 
         protected override void EnterDeath() {
             _rb2D.velocity = Vector2.zero;
             Destroy(gameObject, 0.1f);
+        }
+
+        public override void AttackFrame() {
+            Debug.Log("Attack Frame");
+            GameObject projectile = Instantiate(_projectile, _rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
+            projectile.GetOrAddComponent<LinearProjectileMover>().Init(_projectileSpeed);
+            projectile.GetOrAddComponent<AutoDestroy>().Init(_projectileDuration);
+            projectile.GetOrAddComponent<EntityDamager>().Init(_damage);
         }
     }
 }

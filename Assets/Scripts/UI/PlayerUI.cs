@@ -16,8 +16,10 @@ namespace UI {
         public TMP_Text SpeedModifier;
         public TMP_Text DamageModifier;
         public TMP_Text AmourModifier;
+        public TMP_Text RegenModifier;
         public TMP_Text HealthReadout;
         public TMP_Text RoomReadout;
+        public TMP_Text KeyReadout;
         public CanvasGroup RoomUICanvas;
         public Image HeathBar;
         public Image AttackIndicator;
@@ -29,10 +31,11 @@ namespace UI {
 
         private void Start() {
             Fader = FindObjectOfType<AutoFader>(true).GetComponent<Image>();
+            RoomUICanvas.FadeCanvas(0.1f, true, this);
         }
 
         public void ToggleRoomReadout(bool showReadout) {
-            RoomUICanvas.FadeCanvas(0.5f, showReadout, this);
+            RoomUICanvas.FadeCanvas(0.5f, !showReadout, this);
         }
 
         public void ShowDeathScreen() {

@@ -8,7 +8,7 @@ using Utilities;
 
 namespace Audio {
 
-    public enum SoundEffectType { None, Attack, Hit, Death, Pickup, UIClick, UIHover }
+    public enum SoundEffectType { None, Attack, Hit, Death, Pickup, UIClick, UIHover, Key }
 
     public class SFXEmitter : MonoBehaviour {
         [SerializeField] private Dictionary<SoundEffectType, AudioSource> _sources;

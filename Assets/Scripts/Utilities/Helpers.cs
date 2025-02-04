@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 namespace Utilities {
@@ -27,6 +29,10 @@ namespace Utilities {
 
         public Vector2 WorldMousePosition() {
             return MainCamera.ScreenToWorldPoint(Input.mousePosition);
+        }
+
+        public Vector2 VectorToMouse(Vector2 position) {
+            return (WorldMousePosition() - position).normalized;
         }
     }
 }

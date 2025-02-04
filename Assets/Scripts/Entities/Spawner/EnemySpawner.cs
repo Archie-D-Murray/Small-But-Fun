@@ -14,7 +14,7 @@ namespace Entity.Spawner {
     public class EnemySpawner : MonoBehaviour {
         [SerializeField] private GameObject _prefab;
         [SerializeField] private SpawnStrategy _strategy;
-        [SerializeField] private CountDownTimer _spawnTimer = new CountDownTimer(0f);
+        [SerializeField] private CountDownTimer _spawnTimer;
         [SerializeField] private int _spawnCount = 0;
         [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private EnemyManager _manager;
@@ -40,7 +40,8 @@ namespace Entity.Spawner {
                     }
                 }
             }
-            _spawnTimer.Reset(_strategy.InitialDelay);
+            _spawnTimer = new CountDownTimer(_strategy.InitialDelay);
+            _spawnTimer.Start();
             if (!_manager) {
                 _manager = FindObjectOfType<EnemyManager>();
             }

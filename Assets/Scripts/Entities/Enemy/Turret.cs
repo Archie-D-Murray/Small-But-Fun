@@ -1,5 +1,7 @@
 using Audio;
 
+using Projectiles;
+
 using UnityEngine;
 
 using Utilities;
@@ -9,6 +11,8 @@ namespace Entity.Enemy {
         [SerializeField] private GameObject _projectile;
         private CountDownTimer _idleLookTimer = new CountDownTimer(2f);
         [SerializeField] private int lookDir;
+        [SerializeField] private float _projectileSpeed = 2f;
+        [SerializeField] private float _projectileDuration = 3f;
 
         public override EnemyType GetEnemyType() {
             return EnemyType.Turret;
@@ -48,11 +52,19 @@ namespace Entity.Enemy {
 
             if (_attackTimer.IsFinished) {
                 _emitter.Play(SoundEffectType.Attack);
-                GameObject projectile = Instantiate(_projectile, _manager.transform);
-                projectile.transform.SetPositionAndRotation(_rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
                 _animator.Play(EnemyAnimations.Attack);
                 _attackTimer.Reset(_attackTime);
             }
+        }
+
+        public override void AttackFrame() {
+            GameObject projectile = Instantiate(_projectile, _rb2D.position, _rb2D.position.RotationTo(_manager.PlayerPosition()));
+            projectile.GetOrAddComponent<LinearProjectileMover>().Init(_projectileSpeed);
+            projectile.GetOrAddComponent<AutoDestroy>().Init(_projectileDuration);
+            projectile.GetOrAddComponent<EntityDamager>().Init(_damage);
+        }
+        protected override void EnterDeath() {
+            Destroy(gameObject, 0.1f);
         }
     }
 }

@@ -20,12 +20,13 @@ namespace Entity.Enemy {
         }
 
         protected override void Idle() {
-            if (Vector2.Distance(_manager.PlayerPosition(), transform.position) <= _attackRange) {
+            if (_manager.InRange(_aggroRange, transform.position)) {
                 SwitchState(EnemyState.Attack);
             }
         }
 
         protected override void Attack() {
+            _animator.SetFloat(EnemyAnimations.Speed, _rb2D.velocity.sqrMagnitude / (_speed * _speed));
             if (!_manager.InRange(_aggroRange, transform.position)) {
                 SwitchState(EnemyState.Idle);
                 return;
@@ -37,16 +38,19 @@ namespace Entity.Enemy {
                 _emitter.Play(SoundEffectType.Attack);
                 _attackTimer.Reset(_attackTime);
                 _animator.Play(EnemyAnimations.Attack);
-                foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, _attackRange, _manager.PlayerLayer)) {
-                    if (!collider.TryGetComponent(out Health health)) { continue; }
-                    health.Damage(_damage);
-                }
             }
         }
 
         protected override void EnterDeath() {
             _rb2D.velocity = Vector2.zero;
             Destroy(gameObject, 0.1f);
+        }
+
+        public override void AttackFrame() {
+            foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, _attackRange, _manager.PlayerLayer)) {
+                if (!collider.TryGetComponent(out Health health)) { continue; }
+                health.Damage(_damage);
+            }
         }
     }
 }

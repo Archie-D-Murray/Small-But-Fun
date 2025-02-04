@@ -106,8 +106,8 @@ MonoBehaviour:
   _state: 0
   _speed: 4
   _attackTime: 1
-  _attackRange: 2
-  _aggroRange: 5
+  _attackRange: 1
+  _aggroRange: 7
   _damage: 5
   _attackTimer:
     _initialTime: 0
@@ -209,7 +209,7 @@ Animator:
   m_GameObject: {fileID: 7433468315230613265}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: -8194345854505910098, guid: f8a06f5bb5edd4e44a777c182f482927, type: 3}
+  m_Controller: {fileID: 9100000, guid: 7c406d2ca45488b4faaf058956089d5d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -268,9 +268,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effects:
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: cabccaa86c1f46f4bab879cb6c6816b3, type: 3}
     Type: 1
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: 96074def4b0662e4ba9a57b0f1b5f2a5, type: 3}
     Type: 2
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: cd676296c9539bb4b814aed282a7c9cd, type: 3}
     Type: 3

@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 0
-  _maxHealth: 10
+  _maxHealth: 15
   _damageModifier: 1
 --- !u!61 &6269825787741029725
 BoxCollider2D:
@@ -177,7 +177,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!95 &5175101754499196520
 Animator:
   serializedVersion: 5
@@ -247,11 +247,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effects:
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: 07004a7e43f63da4db070e539fa08ffd, type: 3}
     Type: 1
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: 4fc88bcd025471e438f0cd231acabc25, type: 3}
     Type: 2
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: ca1c6b5edeb0dbc419c5a38a6196d880, type: 3}
     Type: 3
 --- !u!114 &-5967084313566020908
 MonoBehaviour:
@@ -266,13 +266,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  _speed: 4
+  _speed: 2
   _attackTime: 1
   _attackRange: 2
   _aggroRange: 5
-  _damage: 5
+  _damage: 10
   _attackTimer:
     _initialTime: 0
     _time: 0
-  _projectile: {fileID: 1557063112324954504, guid: 8aaf7eba007498848b6e16f536966e92, type: 3}
+  _projectile: {fileID: 5947006881848647236, guid: 8aaf7eba007498848b6e16f536966e92, type: 3}
   lookDir: 0
+  _projectileSpeed: 3
+  _projectileDuration: 10

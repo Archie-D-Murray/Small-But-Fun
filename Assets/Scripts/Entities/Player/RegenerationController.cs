@@ -1,3 +1,5 @@
+using UI;
+
 using UnityEngine;
 
 using Utilities;
@@ -21,6 +23,7 @@ namespace Entity.Player {
                 _health.Heal(_health.MaxHealth * _regenPercent * _multiplier);
                 _regenTimer.Reset(_regenTickSpeed);
             }
+            PlayerUI.Instance.RegenModifier.text = $"{(_regenPercent * _multiplier / _regenTickSpeed):0% / sec}";
         }
 
         public void Increase() {

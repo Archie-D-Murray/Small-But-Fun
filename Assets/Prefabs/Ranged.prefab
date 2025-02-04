@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 0
-  _maxHealth: 10
+  _maxHealth: 7
   _damageModifier: 1
 --- !u!61 &6269825787741029725
 BoxCollider2D:
@@ -212,16 +212,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  _speed: 4
-  _attackTime: 1
+  _speed: 8
+  _attackTime: 0.75
   _attackRange: 5
-  _aggroRange: 7
-  _damage: 5
+  _aggroRange: 10
+  _damage: 2
   _attackTimer:
     _initialTime: 0
     _time: 0
   _projectile: {fileID: 1557063112324954504, guid: 55bda8a83956adee3912e20bc196843e, type: 3}
-  _projectileSpeed: 2
+  _projectileSpeed: 10
   _projectileDuration: 1
   _runRange: 3
 --- !u!58 &-1363000295140220827
@@ -272,9 +272,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effects:
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: 07004a7e43f63da4db070e539fa08ffd, type: 3}
     Type: 1
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: 96074def4b0662e4ba9a57b0f1b5f2a5, type: 3}
     Type: 2
-  - Clip: {fileID: 0}
+  - Clip: {fileID: 8300000, guid: cd676296c9539bb4b814aed282a7c9cd, type: 3}
     Type: 3

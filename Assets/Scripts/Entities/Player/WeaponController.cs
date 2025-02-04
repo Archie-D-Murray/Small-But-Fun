@@ -35,6 +35,7 @@ namespace Entity.Player {
         private readonly int _death = Animator.StringToHash("Death");
 
         private void Start() {
+            _emitter = GetComponent<SFXEmitter>();
             _health = GetComponent<Health>();
             _health.OnDeath += () => {
                 _animator.Play(_death);
@@ -57,7 +58,9 @@ namespace Entity.Player {
             if (Input.GetMouseButtonDown(0) && _attackTimer.IsFinished) {
                 _attackTimer.Reset(attackTime);
                 _attackTimer.Start();
-                Attack();
+                _animator.Play(_attack);
+                _animator.speed = 1f / attackTime;
+                _emitter.Play(SoundEffectType.Attack);
             }
             float fAngle = Mathf.RoundToInt(Helpers.Instance.AngleToMouse(transform));
             if (fAngle < 0) { fAngle = 360 + fAngle; }
@@ -68,22 +71,16 @@ namespace Entity.Player {
         private void FixedUpdate() {
             PlayerUI.Instance.AttackIndicator.fillAmount = _attackTimer.Progress();
             PlayerUI.Instance.HeathBar.fillAmount = _health.PercentHealth;
-            PlayerUI.Instance.HealthReadout.text = $"{_health.CurrentHealth} / {_health.MaxHealth}";
+            PlayerUI.Instance.HealthReadout.text = $"{_health.CurrentHealth:0} / {_health.MaxHealth:0}";
             PlayerUI.Instance.SizeModifier.text = $"{_sizeController.SizeModifier:0%}";
             PlayerUI.Instance.DamageModifier.text = $"{(_damageModifier * _sizeController.DamageModifier):0%}";
             PlayerUI.Instance.SpeedModifier.text = $"{_sizeController.SpeedModifier:0%}";
             PlayerUI.Instance.AmourModifier.text = $"{_sizeController.DamageModifier:0%}";
         }
 
-        private void Attack() {
-            _animator.Play(_attack);
-            _animator.speed = 1f / attackTime;
-            Debug.Log("Attack");
-            string time = Time.time.ToString("0.0");
-            _emitter.Play(SoundEffectType.Attack);
+        public void Attack() {
             foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, attackRange, _mask)) {
-                Debug.Log($"Hitting {collider.name} at time: {time}");
-                if (!collider.TryGetComponent(out Health health) || Vector2.Dot(((Vector2)collider.transform.position - (Vector2)transform.position).normalized, (Vector2)transform.up) <= 0.5f || !collider.isTrigger) { // Enemies have actual collider so they don't go through walls + trigger collider :(
+                if (!collider.TryGetComponent(out Health health) || Vector2.Dot(((Vector2)collider.transform.position - (Vector2)transform.position).normalized, Helpers.Instance.VectorToMouse(transform.position)) <= 0.5f || !collider.isTrigger) { // Enemies have actual collider so they don't go through walls + trigger collider :(
                     continue;
                 } else {
                     health.Damage(damage);

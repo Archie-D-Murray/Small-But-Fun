@@ -127,5 +127,12 @@ namespace Entity.Enemy {
         protected virtual void EnterAttack() { }
 
         protected virtual void EnterDeath() { }
+
+        public void SetDifficulty(float difficultyModifier) {
+            _health.UpdateMaxHealth(_health.MaxHealth * difficultyModifier);
+            _damage *= difficultyModifier;
+        }
+
+        public virtual void AttackFrame() { }
     }
 }
